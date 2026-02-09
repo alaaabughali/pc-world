@@ -3,7 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>عالم ال PC</title>
+    <title>عالم ال PC | تجميع وتنظيم</title>
+    <meta name="description"
+        content="عالم ال PC موقع عربي لتجميع وتنظيم روابط تحميل الألعاب والبرامج ونسخ الويندوز من المصادر الرسمية والموثوقة.">
     <style>
         body {
             margin: 0;
@@ -73,14 +75,26 @@
             border-radius: 8px
         }
 
-        .rating span {
-            cursor: pointer;
-            font-size: 20px;
-            color: #64748b
+        .sources a {
+            display: inline-block;
+            margin: 5px 5px 0 0;
+            padding: 6px 10px;
+            background: #334155;
+            border-radius: 6px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 13px
         }
 
-        .rating .active {
-            color: gold
+        .sources a:hover {
+            background: #475569
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: #020617;
+            color: #94a3b8
         }
     </style>
 </head>
@@ -89,17 +103,17 @@
 
     <header>
         <h1>🌍 عالم ال PC</h1>
-        <p>مركزك الشامل لكل ما يخص الكمبيوتر</p>
+        <p>موقع تجميع وتنظيم روابط التحميل من المصادر الرسمية</p>
     </header>
 
     <div class="about">
-        <h2>نبذة عن الموقع</h2>
-        <p>عالم ال PC هو موقع عربي متخصص في توفير أفضل ألعاب الكمبيوتر، البرامج الضرورية، ونسخ الويندوز المحدثة مع روابط
-            مباشرة وشروحات مبسطة للمستخدمين.</p>
+        <h2>ما هو عالم ال PC؟</h2>
+        <p>عالم ال PC لا يستضيف ملفات، بل يجمع لك أفضل روابط التحميل المباشر من المواقع الرسمية والموثوقة مثل Steam
+            وEpic وMicrosoft وAdobe.</p>
     </div>
 
     <nav>
-        <input type="text" id="search" placeholder="ابحث هنا">
+        <input type="text" id="search" placeholder="ابحث عن لعبة أو برنامج">
         <button onclick="filterType('all')">الكل</button>
         <button onclick="filterType('لعبة')">الألعاب</button>
         <button onclick="filterType('برنامج')">البرامج</button>
@@ -108,21 +122,44 @@
 
     <section class="container" id="list"></section>
 
+    <footer>
+        عالم ال PC © 2026 - موقع تجميع وتنظيم فقط
+    </footer>
+
     <script>
         const data = [
-            { name: "GTA V", type: "لعبة", desc: "عالم مفتوح", link: "#" },
-            { name: "FIFA 24", type: "لعبة", desc: "كرة قدم", link: "#" },
-            { name: "Cyberpunk 2077", type: "لعبة", desc: "RPG مستقبلية", link: "#" },
-
-            { name: "Photoshop", type: "برنامج", desc: "تعديل الصور", link: "#" },
-            { name: "WinRAR", type: "برنامج", desc: "ضغط الملفات", link: "#" },
-            { name: "VLC Player", type: "برنامج", desc: "مشغل فيديو", link: "#" },
-
-            { name: "Windows 7", type: "ويندوز", desc: "نسخة خفيفة ومستقرة", link: "#" },
-            { name: "Windows 8", type: "ويندوز", desc: "واجهة مختلفة", link: "#" },
-            { name: "Windows 8.1", type: "ويندوز", desc: "تحسينات على 8", link: "#" },
-            { name: "Windows 10", type: "ويندوز", desc: "الأكثر استخداماً", link: "#" },
-            { name: "Windows 11", type: "ويندوز", desc: "أحدث نسخة", link: "#" }
+            {
+                name: "GTA V", type: "لعبة", desc: "لعبة عالم مفتوح", sources: [
+                    { name: "Steam", link: "https://store.steampowered.com" },
+                    { name: "Epic Games", link: "https://www.epicgames.com" }
+                ]
+            },
+            {
+                name: "Cyberpunk 2077", type: "لعبة", desc: "RPG مستقبلية", sources: [
+                    { name: "Steam", link: "https://store.steampowered.com" },
+                    { name: "GOG", link: "https://www.gog.com" }
+                ]
+            },
+            {
+                name: "Photoshop", type: "برنامج", desc: "تعديل الصور", sources: [
+                    { name: "Adobe", link: "https://www.adobe.com" }
+                ]
+            },
+            {
+                name: "VLC Player", type: "برنامج", desc: "مشغل فيديو", sources: [
+                    { name: "Official", link: "https://www.videolan.org" }
+                ]
+            },
+            {
+                name: "Windows 10", type: "ويندوز", desc: "نسخة مستقرة", sources: [
+                    { name: "Microsoft", link: "https://www.microsoft.com/software-download" }
+                ]
+            },
+            {
+                name: "Windows 11", type: "ويندوز", desc: "أحدث نسخة", sources: [
+                    { name: "Microsoft", link: "https://www.microsoft.com/software-download/windows11" }
+                ]
+            }
         ];
 
         let currentData = data;
@@ -130,17 +167,18 @@
 
         function render(items) {
             list.innerHTML = "";
-            items.forEach((item, i) => {
+            items.forEach(item => {
                 const div = document.createElement("div");
                 div.className = "card";
+                let links = "";
+                item.sources.forEach(s => {
+                    links += `<a href="${s.link}" target="_blank">${s.name}</a>`;
+                });
                 div.innerHTML = `
       <h3>${item.name}</h3>
       <p>${item.desc}</p>
-      <small>${item.type}</small><br>
-      <a href="${item.link}" class="btn">تحميل</a>
-      <div class="rating">
-        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-      </div>`;
+      <small>${item.type}</small>
+      <div class="sources">${links}</div>`;
                 list.appendChild(div);
             });
         }
@@ -153,20 +191,9 @@
         }
 
         function filterType(type) {
-            if (type === 'all') {
-                currentData = data;
-            } else {
-                currentData = data.filter(i => i.type === type);
-            }
+            if (type === 'all') currentData = data;
+            else currentData = data.filter(i => i.type === type);
             render(currentData);
-        }
-
-        list.onclick = (e) => {
-            if (e.target.tagName === 'SPAN') {
-                const stars = e.target.parentElement.children;
-                for (let i = 0; i < stars.length; i++)stars[i].classList.remove('active');
-                for (let i = 0; i <= Array.from(stars).indexOf(e.target); i++)stars[i].classList.add('active');
-            }
         }
     </script>
 
